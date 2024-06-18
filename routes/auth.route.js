@@ -5,8 +5,8 @@ const asyncHandler= require('express-async-handler')
 
 
 authRouter.route('/register').post(asyncHandler(authController.register))
-
 authRouter.route('/login').post(asyncHandler(authController.login))
+authRouter.route('/verify-otp').post(asyncHandler(authController.verifyOTP));
 
 
 module.exports=authRouter;

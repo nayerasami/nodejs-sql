@@ -56,7 +56,7 @@ module.exports.updateUserValidation = Joi.object().required().keys({
     bio: Joi.string().optional().min(2).max(250).trim(),
     fullNameArabic: Joi.string().optional().min(2).max(150).trim(),
     fullNameEnglish: Joi.string().optional().min(2).max(150).trim(),
-    county: Joi.string().optional().min(2).max(30).trim(),
+    country: Joi.string().optional().min(2).max(30).trim(),
     city: Joi.string().optional().min(2).max(30).trim(),
     fullAddress: Joi.string().optional().min(2).max(150).trim()
 })
