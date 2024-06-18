@@ -12,7 +12,7 @@ const verifyToken = require('../middlewares/auth/isAuthorized.js');
 const bootstrap = (app, express) => {
 
 
-    app.use(express.static(path.join(__dirname,'images')))
+    // app.use(express.static(path.join(__dirname,'images')))
 
     app.use(express.json());
     const corsOptions = {
@@ -44,7 +44,7 @@ const bootstrap = (app, express) => {
     app.use(globalErrorHandling)
     
     //db connection
-    sequelize.sync({force: true})
+    sequelize.sync()
     .then(() => {
         console.log('Database & tables created successfully...');
     })
