@@ -1,7 +1,7 @@
 const userServices = require('../services/user.services')
 const ApiError = require("../utiles/ErrorClass.js")
 const User = require('../models/users.js')
-
+const cloudinary =require('../config/cloudinary.config')
 
 module.exports.getAllUsers = async (req, res, next) => {
     const users = await userServices.getAllUsersServices()
@@ -58,14 +58,42 @@ module.exports.deleteUser = async (req, res, next) => {
     res.status(200).json({ status: "success", data: null })
 }
 
+// module.exports.uploadProfileImage = async (req, res, next) => {
+//     const { id } = req.params
+//     const user = await userServices.getSpecificUserServices(id)
+//     if (!user) {
+//         return next(new ApiError('this user is not found', 404))
+//     }
+//     res.status(201).json({ message: "image uploaded successfully" })
+// }
+
 module.exports.uploadProfileImage = async (req, res, next) => {
-    const { id } = req.params
-    const user = await userServices.getSpecificUserServices(id)
+    const { id } = req.params;
+    const user = await userServices.getSpecificUserServices(id);
+    
     if (!user) {
-        return next(new ApiError('this user is not found', 404))
+        return next(new ApiError('This user is not found', 404));
     }
-    res.status(201).json({ message: "image uploaded successfully" })
-}
+
+    if (!req.file) {
+        return next(new ApiError('No file uploaded', 400));
+    }
+
+    cloudinary.uploader.upload_stream(
+        { folder: 'user-images' },
+        async (error, result) => {
+            if (error) {
+                return next(error);
+            }
+            user.image = result.secure_url;
+            await user.save();
+            res.status(201).json({ message: "Image uploaded successfully", user });
+        }
+    ).end(req.file.buffer);
+};
+
+
+
 
 
 module.exports.checkIfUserExists = async (req, res, next) => {
