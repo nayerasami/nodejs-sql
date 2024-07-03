@@ -1,23 +1,23 @@
-const Sequelize = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/dbConnection')
 const User = sequelize.define('user', {
     id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
     firstName: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     lastName: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
 
     }, email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
@@ -25,20 +25,20 @@ const User = sequelize.define('user', {
         },
     }, 
     phoneNumber: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true
     },
     password: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     image: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     gender: {
-        type: Sequelize.ENUM('male,female'),
+        type: DataTypes.ENUM('male','female'),
         allowNull: true
     },
     birthDate: {
@@ -46,15 +46,15 @@ const User = sequelize.define('user', {
         allowNull: true
     }, 
     nationality: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     bio: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     fullNameArabic: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true,
     },
     fullNameEnglish: {
@@ -62,19 +62,19 @@ const User = sequelize.define('user', {
         allowNull: true,
     },
     county: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     city: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     fullAddress: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     accessToken:{
-        type:Sequelize.STRING,
+        type:DataTypes.STRING,
     }
 });
 

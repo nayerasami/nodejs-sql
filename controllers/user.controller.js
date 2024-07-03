@@ -2,6 +2,7 @@ const userServices = require('../services/user.services')
 const ApiError = require("../utiles/ErrorClass.js")
 const User = require('../models/users.js')
 const cloudinary =require('../config/cloudinary.config')
+const sharp =require('sharp')
 
 module.exports.getAllUsers = async (req, res, next) => {
     const users = await userServices.getAllUsersServices()
@@ -79,6 +80,16 @@ module.exports.uploadProfileImage = async (req, res, next) => {
         return next(new ApiError('No file uploaded', 400));
     }
 
+
+    const resizedImage =await sharp(req.file.buffer)
+    .resize(200,200)
+    .jpeg({quality:80})
+    .toBuffer()
+
+    if (resizedImage.length > 10485760) {
+        return next(new ApiError('Compressed image size is still too large', 400));
+    }
+
     cloudinary.uploader.upload_stream(
         { folder: 'user-images' },
         async (error, result) => {
@@ -89,7 +100,7 @@ module.exports.uploadProfileImage = async (req, res, next) => {
             await user.save();
             res.status(201).json({ message: "Image uploaded successfully", user });
         }
-    ).end(req.file.buffer);
+    ).end(resizedImage);
 };
 
 

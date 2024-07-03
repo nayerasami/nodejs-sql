@@ -6,7 +6,7 @@ module.exports.getAllSocialMediaService =async()=>{
 }
 
 module.exports.getSpecificSocialMediaService  =async(id)=>{
-    return await SocialMedia.findByPk(id)
+    return await SocialMedia.findOne({ where: { socialMediaPlatformsId: id } });
 }
 
 module.exports.addNewSocialMediaService =async(data)=>{
@@ -18,5 +18,5 @@ module.exports.updateSocialMediaService =async (data,id)=>{
 }
 
 module.exports.deleteSocialMediaService =async(id)=>{
-    return await SocialMedia.destroy({where:{id}})
+    return await SocialMedia.destroy({ where: { socialMediaPlatformsId: id }})
 }

@@ -1,4 +1,4 @@
- const cors = require('cors');
+const cors = require('cors');
 const sequelize = require('../config/dbConnection');
 const { globalErrorHandling } = require("../utiles/globalErrorHandling.js");
 const ApiError =require("../utiles/ErrorClass.js");
